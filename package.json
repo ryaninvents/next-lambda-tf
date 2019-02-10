@@ -1,0 +1,7 @@
+{
+  "name": "@ryaninvents/next-lambda-tf",
+  "version": "0.0.0-semantically-versioned",
+  "main": "index.js",
+  "author": "Ryan Kennedy <ryaninvents@users.noreply.github.com>",
+  "license": "MIT"
+}
