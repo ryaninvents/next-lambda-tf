@@ -3,5 +3,15 @@
   "version": "0.0.0-semantically-versioned",
   "main": "index.js",
   "author": "Ryan Kennedy <ryaninvents@users.noreply.github.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "next": "^7.0.3",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  }
 }
