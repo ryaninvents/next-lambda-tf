@@ -5,13 +5,49 @@
   "author": "Ryan Kennedy <ryaninvents@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.16.4",
     "next": "^7.0.3",
     "react": "^16.8.1",
-    "react-dom": "^16.8.1"
+    "react-dom": "^16.8.1",
+    "serverless-http": "^1.9.0"
+  },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-standard-pkg"
+      ],
+      [
+        "@pika/plugin-build-node"
+      ],
+      [
+        "@ryaninvents/plugin-bundle-zip-node", {
+          "directory": "../.next",
+          "bundleName": "next"
+        }
+      ],
+      [
+        "@ryaninvents/plugin-bundle-zip-node", {
+          "directory": "dist-node",
+          "bundleName": "node"
+        }
+      ],
+      [
+        "@ryaninvents/plugin-bundle-dependencies", {
+          "prefix": "nodejs/node_modules"
+        }
+      ]
+    ]
   },
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "build": "next build && pack build",
     "start": "next start"
+  },
+  "devDependencies": {
+    "@pika/pack": "^0.3.1",
+    "@pika/plugin-build-node": "^0.3.10",
+    "@pika/plugin-standard-pkg": "^0.3.10",
+    "@ryaninvents/plugin-bundle-dependencies": "^1.1.0",
+    "@ryaninvents/plugin-bundle-zip-node": "^1.2.0"
   }
 }

@@ -78,3 +78,15 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+.env.dev
+.sandbox.js
+
+/pkg/
+
+/deploy/*.tfstate*
+/deploy/.terraform/
+/deploy/backend.tf
+/deploy/*.tfvars
+
+/.next/
