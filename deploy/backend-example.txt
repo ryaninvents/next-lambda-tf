@@ -1,0 +1,14 @@
+# Backend configuration
+
+terraform {
+  backend "s3" {
+    bucket = "mybucket"
+    key = "apps/next-lambda-tf/deployments/default"
+    region = "us-east-2"
+  }
+}
+
+provider "aws" {
+  region = "us-east-2"
+}
+

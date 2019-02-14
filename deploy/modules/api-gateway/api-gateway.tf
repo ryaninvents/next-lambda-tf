@@ -1,0 +1,39 @@
+locals {
+  api_gateway_redeployment_hash = "${var.redeployment_hash}"
+}
+
+resource "aws_api_gateway_rest_api" "api" {
+  name        = "${var.app_name}-${var.app_stage}"
+  description = "${var.app_description}"
+}
+
+resource "aws_api_gateway_deployment" "deployment" {
+  rest_api_id = "${aws_api_gateway_rest_api.api.id}"
+  stage_name  = "${var.api_gateway_stage}"
+  description = "Deployment for ${var.app_name} ${var.app_stage}"
+
+  variables = {
+    source_hash  = "${replace(local.api_gateway_redeployment_hash, "+", ".")}"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_api_gateway_stage" "api" {
+  stage_name = "${var.api_gateway_stage}"
+  rest_api_id = "${aws_api_gateway_rest_api.api.id}"
+  deployment_id = "${aws_api_gateway_deployment.deployment.id}"
+
+  lifecycle {
+    create_before_destroy = false
+  }
+
+  tags = "${local.default_tags}"
+}
+
+# resource "aws_api_gateway_base_path_mapping" "api" {
+#   api_id      = "${aws_api_gateway_rest_api.api.id}"
+#   stage_name  = "${aws_api_gateway_deployment.deployment.stage_name}"
+# }

@@ -1,7 +1,7 @@
 {
   "name": "@ryaninvents/next-lambda-tf",
   "version": "0.0.0-semantically-versioned",
-  "main": "index.js",
+  "main": "src/index.js",
   "author": "Ryan Kennedy <ryaninvents@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
@@ -20,23 +20,82 @@
         "@pika/plugin-build-node"
       ],
       [
-        "@ryaninvents/plugin-bundle-zip-node", {
+        "@ryaninvents/plugin-bundle-zip-node",
+        {
           "directory": "../.next",
           "bundleName": "next"
         }
       ],
       [
-        "@ryaninvents/plugin-bundle-zip-node", {
+        "@ryaninvents/plugin-bundle-zip-node",
+        {
           "directory": "dist-node",
           "bundleName": "node"
         }
       ],
       [
-        "@ryaninvents/plugin-bundle-dependencies", {
+        "@ryaninvents/plugin-bundle-dependencies",
+        {
           "prefix": "nodejs/node_modules"
         }
       ]
     ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "semistandard",
+      "react-app"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/**",
+          "*.test.js"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ]
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": 8
+          },
+          "modules": false
+        }
+      ]
+    ],
+    "env": {
+      "test": {
+        "presets": [
+          [
+            "@babel/preset-env",
+            {
+              "targets": {
+                "node": 8
+              }
+            }
+          ]
+        ]
+      },
+      "development": {
+        "presets": [
+          [
+            "@babel/preset-env",
+            {
+              "targets": {
+                "node": 8
+              }
+            }
+          ]
+        ]
+      }
+    }
   },
   "scripts": {
     "dev": "next",
@@ -44,10 +103,23 @@
     "start": "next start"
   },
   "devDependencies": {
+    "@babel/node": "^7.2.2",
     "@pika/pack": "^0.3.1",
     "@pika/plugin-build-node": "^0.3.10",
     "@pika/plugin-standard-pkg": "^0.3.10",
     "@ryaninvents/plugin-bundle-dependencies": "^1.1.0",
-    "@ryaninvents/plugin-bundle-zip-node": "^1.2.0"
+    "@ryaninvents/plugin-bundle-zip-node": "^1.2.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.13.0",
+    "eslint-config-react-app": "^3.0.7",
+    "eslint-config-semistandard": "^13.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-flowtype": "^3.4.1",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-standard": "^4.0.0"
   }
 }
