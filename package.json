@@ -5,6 +5,7 @@
   "author": "Ryan Kennedy <ryaninvents@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "^7.3.1",
     "express": "^4.16.4",
     "next": "^7.0.3",
     "react": "^16.8.1",
@@ -20,17 +21,11 @@
         "@pika/plugin-build-node"
       ],
       [
-        "@ryaninvents/plugin-bundle-zip-node",
+        "@ryaninvents/plugin-bundle-nextjs",
         {
-          "directory": "../.next",
-          "bundleName": "next"
-        }
-      ],
-      [
-        "@ryaninvents/plugin-bundle-zip-node",
-        {
-          "directory": "dist-node",
-          "bundleName": "node"
+          "nextBuildScript": [
+            "build:nextjs"
+          ]
         }
       ],
       [
@@ -68,6 +63,12 @@
           },
           "modules": false
         }
+      ],
+      [
+        "babel-preset-react-app", {
+          "absoluteRuntime": false,
+          "helpers": false
+        }
       ]
     ],
     "env": {
@@ -80,6 +81,10 @@
                 "node": 8
               }
             }
+          ],
+          [
+            "babel-preset-react-app",
+            {"modules": true, "helpers": false}
           ]
         ]
       },
@@ -92,24 +97,31 @@
                 "node": 8
               }
             }
+          ],
+          [
+            "babel-preset-react-app",
+            {"modules": true, "helpers": false}
           ]
         ]
       }
     }
   },
   "scripts": {
-    "dev": "next",
-    "build": "next build && pack build",
-    "start": "next start"
+    "dev": "NODE_ENV=development babel-node src/index.js",
+    "build:nextjs": "NODE_ENV=production next build",
+    "build": "pack build",
+    "start": "babel-node src/index.js"
   },
   "devDependencies": {
     "@babel/node": "^7.2.2",
     "@pika/pack": "^0.3.1",
     "@pika/plugin-build-node": "^0.3.10",
     "@pika/plugin-standard-pkg": "^0.3.10",
-    "@ryaninvents/plugin-bundle-dependencies": "^1.1.0",
+    "@ryaninvents/plugin-bundle-dependencies": "^1.1.1",
+    "@ryaninvents/plugin-bundle-nextjs": "^1.0.0",
     "@ryaninvents/plugin-bundle-zip-node": "^1.2.0",
     "babel-eslint": "^10.0.1",
+    "babel-preset-react-app": "^7.0.1",
     "eslint": "^5.13.0",
     "eslint-config-react-app": "^3.0.7",
     "eslint-config-semistandard": "^13.0.0",
