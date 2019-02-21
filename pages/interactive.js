@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
+import { Button, Flex, Box } from 'rebass';
 
 export default function Interactive ({ initialCount }) {
   const [count, setCount] = useState(initialCount);
 
   return (
-    <div>
-      <button onClick={() => setCount(count - 1)}>-</button>
-      <strong>{String(count)}</strong>
-      <button onClick={() => setCount(count + 1)}>+</button>
-    </div>
+    <Flex flexDirection="row" alignItems="baseline">
+      <Button onClick={() => setCount(count - 1)}>-</Button>
+      <Box mx={3}>{String(count)}</Box>
+      <Button onClick={() => setCount(count + 1)}>+</Button>
+    </Flex>
   );
 }
 
-Interactive.getInitialProps = function getInitialProps ({ req }) {
-  const count = req.query && req.query.count ? Number(req.query.count) : 0;
+Interactive.getInitialProps = function getInitialProps ({ query = {} }) {
+  const count = !isNaN(query.count) ? Number(query.count) : 0;
   return { initialCount: count };
 };
