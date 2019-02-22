@@ -82,11 +82,11 @@ typings/
 .env.dev
 .sandbox.js
 
-/pkg/
+pkg/
 
 /deploy/*.tfstate*
 /deploy/.terraform/
 /deploy/backend.tf
 /deploy/*.tfvars
 
-/.next/
+.next/

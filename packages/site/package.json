@@ -1,12 +1,9 @@
 {
-  "name": "@ryaninvents/next-lambda-tf",
+  "name": "@~/site",
+  "private": true,
   "version": "0.0.0-semantically-versioned",
   "main": "src/index.js",
-  "private": true,
   "author": "Ryan Kennedy <ryaninvents@users.noreply.github.com>",
-  "workspaces": [
-    "packages/*"
-  ],
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.3.1",

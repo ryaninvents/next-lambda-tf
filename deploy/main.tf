@@ -21,8 +21,8 @@ module "api_gateway" {
 resource "aws_lambda_function" "nextjs_lambda" {
   function_name = "${var.app_name}-${var.app_stage}-nextjs"
 
-  filename = "${path.module}/../pkg/dist-next.zip"
-  source_code_hash = "${base64sha256(file("${path.module}/../pkg/dist-next.zip"))}"
+  filename = "${path.module}/../packages/site/pkg/dist-next.zip"
+  source_code_hash = "${base64sha256(file("${path.module}/../packages/site/pkg/dist-next.zip"))}"
 
   handler = "index.handler"
   runtime = "nodejs8.10"
@@ -46,8 +46,8 @@ resource "aws_lambda_function" "nextjs_lambda" {
 
 resource "aws_lambda_layer_version" "nextjs_deps" {
   layer_name = "${var.app_name}-${var.app_stage}-nextjs-deps"
-  filename = "${path.module}/../pkg/dist-dependencies.zip"
-  source_code_hash = "${base64sha256(file("${path.module}/../pkg/dist-dependencies.zip"))}"
+  filename = "${path.module}/../packages/site/pkg/dist-dependencies.zip"
+  source_code_hash = "${base64sha256(file("${path.module}/../packages/site/pkg/dist-dependencies.zip"))}"
   compatible_runtimes = ["nodejs8.10"]
 }
 
