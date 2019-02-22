@@ -154,6 +154,7 @@
     "dev": "NODE_ENV=development babel-node src/index.js",
     "build:nextjs": "NODE_ENV=production next build",
     "build": "pack build",
+    "test": "echo No tests yet",
     "start": "babel-node src/index.js"
   },
   "devDependencies": {

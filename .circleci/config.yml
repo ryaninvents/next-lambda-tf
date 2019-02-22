@@ -1,0 +1,79 @@
+version: 2
+
+jobs:
+  install:
+    docker:
+      - image: circleci/node:8.11
+    environment:
+      NODE_ENV: 'development'
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: install
+          command: 'yarn'
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+            - packages/*/node_modules
+  test:
+    docker:
+      - image: circleci/node:8.11
+    environment:
+      NODE_ENV: 'test'
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: test
+          command: yarn test
+  build:
+    docker:
+      - image: circleci/node:8.11
+    environment:
+      NODE_ENV: 'production'
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: build site
+          command: yarn workspace @~/site build
+  deploy:
+    docker:
+      - image: circleci/node:8.11
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install terraform
+          working_directory: /tmp
+          command: |
+            curl -o terraform.zip https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_linux_amd64.zip
+            unzip terraform.zip
+            sudo mv terraform /usr/bin/terraform
+            terraform -version
+      - run:
+          name: Download credentials
+          command: 'echo "Needs work" && exit 1'
+      - run:
+          name: Deploy
+          working_directory: deploy
+          command: 'terraform apply -auto-approve'
+
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - install
+      - test:
+          requires:
+            - install
+      - build:
+          requires:
+            - install
