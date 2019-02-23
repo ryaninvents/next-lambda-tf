@@ -58,6 +58,28 @@ async function downloadSecrets () {
   ]);
 }
 
+function deployStageQuestions (siterc) {
+  return [{
+    name: 'deployState',
+    message: 'Deployment state?',
+    type: 'list',
+    choices: ['dev', 'test', 'prod', 'default', 'other'],
+    default: get(siterc, 'app.deployState', 'dev')
+  },
+  {
+    name: 'deployStateOther',
+    default: null,
+    when: ({ deployState }) => deployState === 'other',
+    message: 'Name of custom deployment state'
+  }];
+}
+
+function writeSiteRc (siterc) {
+  // Discard extra info that `rc` attaches
+  const { _, configs, config, ...restRc } = siterc;
+  fs.writeFileSync(INI_FILENAME, ini.stringify(restRc));
+}
+
 async function init () {
   const siterc = rc('site');
   const { profile, bucket, region, appName, deployState, deployStateOther, rootDomain, certArn } = await prompt([
@@ -81,19 +103,7 @@ async function init () {
       message: 'Name of AWS secrets bucket?',
       default: get(siterc, 'terraform.bucket', 'tfstate.example.net')
     },
-    {
-      name: 'deployState',
-      message: 'Deployment state?',
-      type: 'list',
-      choices: ['dev', 'test', 'prod', 'default', 'other'],
-      default: get(siterc, 'app.deployState', 'dev')
-    },
-    {
-      name: 'deployStateOther',
-      default: null,
-      when: ({ deployState }) => deployState === 'other',
-      message: 'Name of custom deployment state'
-    },
+    ...deployStageQuestions(siterc),
     {
       name: 'rootDomain',
       message: 'Website root domain?',
@@ -126,12 +136,20 @@ async function init () {
     }
   });
 
-  {
-    // Discard extra info that `rc` attaches
-    const { _, configs, config, ...restRc } = siterc;
-    fs.writeFileSync(INI_FILENAME, ini.stringify(restRc));
-  }
+  writeSiteRc(siterc);
+  await writeDeployFiles();
+}
 
+async function stage () {
+  const siterc = rc('site');
+  if (!siterc.app) {
+    console.log('Looks like you\'re not set up; beginning full init.');
+    await init();
+    return;
+  }
+  const { deployState, deployStateOther } = await prompt(deployStageQuestions(siterc));
+  siterc.app.deployState = deployStateOther || deployState;
+  writeSiteRc(siterc);
   await writeDeployFiles();
 }
 
@@ -222,6 +240,7 @@ provider "aws" {${profile ? `
 Object.assign(exports, {
   init,
   'init:ci': initCi,
+  stage,
   'deployment-files.write': writeDeployFiles,
   'secrets.upload': uploadSecrets,
   'secrets.download': downloadSecrets
