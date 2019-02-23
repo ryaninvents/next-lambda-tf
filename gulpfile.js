@@ -167,7 +167,7 @@ async function initCi () {
 async function writeDeployFiles () {
   const siterc = rc('site');
   const profile = get(siterc, 'aws.profile');
-  const bucket = get(siterc, 'aws.bucket');
+  const bucket = get(siterc, 'terraform.bucket');
   const backend = `# Backend configuration
 
 terraform {
