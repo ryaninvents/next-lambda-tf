@@ -23,8 +23,8 @@ resource "aws_route53_record" "app" {
 }
 
 resource "aws_api_gateway_base_path_mapping" "api" {
-  api_id      = "${module.api_gateway.rest_api_id}"
-  stage_name  = "${module.api_gateway.api_gateway_stage_name}"
+  api_id      = "${module.site_gateway.rest_api_id}"
+  stage_name  = "${module.site_gateway.api_gateway_stage_name}"
   domain_name = "${aws_api_gateway_domain_name.app.domain_name}"
 }
 

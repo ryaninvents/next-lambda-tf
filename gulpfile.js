@@ -138,19 +138,7 @@ async function init () {
 
   writeSiteRc(siterc);
   await writeDeployFiles();
-}
-
-async function stage () {
-  const siterc = rc('site');
-  if (!siterc.app) {
-    console.log('Looks like you\'re not set up; beginning full init.');
-    await init();
-    return;
-  }
-  const { deployState, deployStateOther } = await prompt(deployStageQuestions(siterc));
-  siterc.app.deployState = deployStateOther || deployState;
-  writeSiteRc(siterc);
-  await writeDeployFiles();
+  await uploadSecrets();
 }
 
 async function initCi () {
@@ -222,7 +210,11 @@ provider "aws" {${profile ? `
     app_stage: deployState,
     ...(deployState === 'prod' ? {
       app_subdomain: get(siterc, 'app.name')
-    } : {})
+    } : {}),
+    google_client_id: get(siterc, 'google.clientId'),
+    google_client_secret: get(siterc, 'google.clientSecret'),
+    shopify_client_id: get(siterc, 'shopify.clientId'),
+    shopify_client_secret: get(siterc, 'shopify.clientSecret')
   }, null, 2);
 
   console.log(tfvars);
@@ -237,10 +229,15 @@ provider "aws" {${profile ? `
   }
 }
 
+async function regenerate () {
+  await writeDeployFiles();
+  await uploadSecrets();
+}
+
 Object.assign(exports, {
   init,
   'init:ci': initCi,
-  stage,
+  regenerate,
   'deployment-files.write': writeDeployFiles,
   'secrets.upload': uploadSecrets,
   'secrets.download': downloadSecrets

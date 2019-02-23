@@ -20,6 +20,9 @@ variable "app_subdomain" {
 
 variable "ssl_cert_arn" {}
 
+variable "google_client_id" {}
+variable "google_client_secret" {}
+
 locals {
   default_tags = {
     app_name = "${var.app_name}"

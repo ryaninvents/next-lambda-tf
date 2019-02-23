@@ -1,14 +1,14 @@
 locals {
-  api_deploy_hash_elements = [
+  site_gateway_deploy_hash_elements = [
     "${aws_lambda_function.nextjs_lambda.source_code_hash}",
     "${module.nextjs_proxy_integration.resource_id}",
     "${module.nextjs_root_integration.resource_id}",
   ]
 
-  redeployment_hash = "${base64sha256(join(",", local.api_deploy_hash_elements))}"
+  redeployment_hash = "${base64sha256(join(",", local.site_gateway_deploy_hash_elements))}"
 }
 
-module "api_gateway" {
+module "site_gateway" {
   source = "./modules/api-gateway"
 
   app_name = "${var.app_name}"
@@ -55,8 +55,8 @@ module "nextjs_proxy_integration" {
   source = "./modules/api-endpoint"
 
   lambda_invoke_arn = "${aws_lambda_function.nextjs_lambda.invoke_arn}"
-  rest_api_id = "${module.api_gateway.rest_api_id}"
-  rest_api_root_resource_id = "${module.api_gateway.root_resource_id}"
+  rest_api_id = "${module.site_gateway.rest_api_id}"
+  rest_api_root_resource_id = "${module.site_gateway.root_resource_id}"
   http_method = "ANY"
   resource_path_part = "{proxy+}"
 }
@@ -65,8 +65,8 @@ module "nextjs_root_integration" {
   source = "./modules/api-endpoint"
 
   lambda_invoke_arn = "${aws_lambda_function.nextjs_lambda.invoke_arn}"
-  rest_api_id = "${module.api_gateway.rest_api_id}"
-  rest_api_root_resource_id = "${module.api_gateway.root_resource_id}"
+  rest_api_id = "${module.site_gateway.rest_api_id}"
+  rest_api_root_resource_id = "${module.site_gateway.root_resource_id}"
   http_method = "ANY"
   create_resource = false
   resource_path_part = ""
@@ -80,5 +80,5 @@ resource "aws_lambda_permission" "apigw_nextjs" {
 
   # The /*/* portion grants access from any method on any resource
   # within the API Gateway "REST API".
-  source_arn = "${module.api_gateway.execution_arn}/*/*/*"
+  source_arn = "${module.site_gateway.execution_arn}/*/*/*"
 }
