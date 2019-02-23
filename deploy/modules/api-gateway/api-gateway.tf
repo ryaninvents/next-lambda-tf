@@ -9,8 +9,11 @@ resource "aws_api_gateway_rest_api" "api" {
 
 resource "aws_api_gateway_deployment" "deployment" {
   rest_api_id = "${aws_api_gateway_rest_api.api.id}"
-  stage_name  = "${var.api_gateway_stage}"
+
   description = "Deployment for ${var.app_name} ${var.app_stage}"
+  // Next line seems odd, but required to prevent "Stage already exists" error.
+  // See https://github.com/terraform-providers/terraform-provider-aws/issues/2918
+  stage_name  = ""
 
   variables = {
     source_hash  = "${replace(local.api_gateway_redeployment_hash, "+", ".")}"
