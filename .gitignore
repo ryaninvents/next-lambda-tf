@@ -87,6 +87,8 @@ pkg/
 /deploy/*.tfstate*
 /deploy/.terraform/
 /deploy/backend.tf
-/deploy/*.tfvars
+/deploy/*.tfvars*
 
 .next/
+
+/.siterc

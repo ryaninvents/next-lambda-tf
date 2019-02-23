@@ -42,9 +42,11 @@ jobs:
       - run:
           name: build site
           command: yarn workspace @~/site build
-  deploy:
+  deployDev:
     docker:
       - image: circleci/node:10
+    environment:
+      DEPLOY_STATE: 'dev'
     steps:
       - checkout
       - attach_workspace:
@@ -59,7 +61,11 @@ jobs:
             terraform -version
       - run:
           name: Download credentials
-          command: 'echo "Needs work" && exit 1'
+          command: 'npx gulp init:ci'
+      - run:
+          name: Initialize Terraform
+          working_directory: deploy
+          command: 'terraform init'
       - run:
           name: Deploy
           working_directory: deploy
@@ -77,3 +83,10 @@ workflows:
       - build:
           requires:
             - install
+      - deployDev:
+          requires:
+            - build
+          context: aws-deploy
+          filters:
+            branches:
+              only: develop
