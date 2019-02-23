@@ -22,7 +22,7 @@ async function uploadSecrets () {
   configAws();
   const s3 = new S3();
   const bucket = get(siterc, 'terraform.bucket');
-  const secretPrefix = get(siterc, 'secrets.prefix');
+  const secretPrefix = getSecretsPrefix(siterc);
   await Promise.all([
     s3.putObject({
       Body: fs.readFileSync(`${__dirname}/deploy/backend.tf`),
@@ -43,7 +43,7 @@ async function downloadOneSecret (filename, s3) {
   const siterc = rc('site');
   const bucketObj = await s3.getObject({
     Bucket: siterc.terraform.bucket,
-    Key: `${siterc.secrets.prefix}/${filename}`
+    Key: `${getSecretsPrefix(siterc)}/${filename}`
   }).promise();
   fs.writeFileSync(`${__dirname}/deploy/${filename}`, bucketObj.Body);
   console.log(`Downloaded "${filename}"`);
@@ -127,18 +127,18 @@ async function init () {
       ...(profile ? { profile } : {}),
       region
     },
-    secrets: {
-      prefix: `apps/${appName}/${deployState}/secrets`
-    },
     terraform: {
-      bucket,
-      key: `apps/${appName}/${deployState}/terraform.tfstate`
+      bucket
     }
   });
 
   writeSiteRc(siterc);
   await writeDeployFiles();
   await uploadSecrets();
+}
+
+function getSecretsPrefix (siterc, key = 'secrets') {
+  return `apps/${siterc.app.name}/${siterc.app.deployState}/${key}`;
 }
 
 async function initCi () {
@@ -151,14 +151,11 @@ async function initCi () {
 
   const siterc = {
     app: {
-      name: appName
-    },
-    secrets: {
-      prefix: `apps/${appName}/${deployState}/secrets`
+      name: appName,
+      deployState
     },
     terraform: {
-      bucket,
-      key: `apps/${appName}/${deployState}/terraform.tfstate`
+      bucket
     },
     aws: {
       region: awsRegion
@@ -180,7 +177,7 @@ terraform {
   backend "s3" {${profile ? `
     profile = ${JSON.stringify(profile)}` : ''}
     bucket = ${JSON.stringify(bucket)}
-    key = ${JSON.stringify(siterc.terraform.key)}
+    key = ${JSON.stringify(getSecretsPrefix(siterc, 'terraform.tfstate'))}
     region = ${JSON.stringify(siterc.aws.region)}
   }
 }
