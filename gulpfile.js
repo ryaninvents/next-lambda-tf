@@ -196,9 +196,15 @@ provider "aws" {${profile ? `
     fs.writeFileSync(`${__dirname}/deploy/backend.tf`, backend);
   }
 
+  const deployState = get(siterc, 'app.deployState');
   const tfvars = JSON.stringify({
     root_domain: get(siterc, 'app.rootDomain'),
-    ssl_cert_arn: get(siterc, 'app.certArn')
+    ssl_cert_arn: get(siterc, 'app.certArn'),
+    app_name: get(siterc, 'app.name'),
+    app_stage: deployState,
+    ...(deployState === 'prod' ? {
+      app_subdomain: get(siterc, 'app.name')
+    } : {})
   }, null, 2);
 
   console.log(tfvars);
