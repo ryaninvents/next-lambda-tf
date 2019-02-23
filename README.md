@@ -11,6 +11,4 @@ Your CircleCI job will need the following environment variables set:
 
 In addition, you will need a CircleCI Context called `aws-deploy` containing an `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. If you plan to use the same bucket for all your Terraform deployments, you can also move `TF_BUCKET` into the Context.
 
-Run `npx gulp init` to set up a local secrets file and push it to S3.
-
-
+Run `npx gulp init` to set up a local secrets file, then run `npx gulp secrets.upload` to persist to S3. You will need to do this once for each environment you plan to set up.
