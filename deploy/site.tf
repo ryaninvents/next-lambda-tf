@@ -14,7 +14,7 @@ module "site_gateway" {
   app_name = "${var.app_name}"
   app_description = "${var.app_description}"
   app_stage = "${var.app_stage}"
-  api_gateway_stage = "${var.api_gateway_stage}"
+  api_gateway_stage = "site"
   redeployment_hash = "${local.redeployment_hash}"
 }
 
