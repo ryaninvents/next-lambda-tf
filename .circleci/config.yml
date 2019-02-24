@@ -42,10 +42,14 @@ jobs:
       - run:
           name: build site
           command: yarn workspace @~/site build
+      - run:
+          name: build api
+          command: yarn workspace @~/api build
       - persist_to_workspace:
           root: .
           paths:
             - packages/site/pkg/*
+            - packages/api/pkg/*
   deployDev:
     docker:
       - image: circleci/node:10
