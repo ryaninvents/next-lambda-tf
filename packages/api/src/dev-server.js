@@ -3,6 +3,7 @@ import expressPlayground from 'graphql-playground-middleware-express';
 import server from './server';
 import { makeExecutableSchema } from 'graphql-tools';
 import { typeDefs, resolvers } from './graphql';
+import playgroundSettings from './graphql/playground-settings';
 
 const schema = makeExecutableSchema({
   typeDefs,
@@ -16,17 +17,7 @@ server.post('/graphql', (req, res, next) => expressGraphql({
 
 server.get('/graphql', expressPlayground({
   endpoint: '/graphql',
-  settings: {
-    'general.betaUpdates': false,
-    'editor.cursorShape': 'line',
-    'editor.fontSize': 14,
-    'editor.fontFamily': "'IBM Plex Mono', 'Source Code Pro', 'Consolas', 'Inconsolata', 'Droid Sans Mono', 'Monaco', monospace",
-    'editor.theme': 'light',
-    'editor.reuseHeaders': true,
-    'prettier.printWidth': 80,
-    'request.credentials': 'include',
-    'tracing.hideTracingResponse': true
-  }
+  settings: playgroundSettings
 }));
 
 const port = parseInt(process.env.PORT, 10) || 3000;
