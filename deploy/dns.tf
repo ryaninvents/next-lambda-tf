@@ -30,12 +30,12 @@ resource "aws_route53_record" "app" {
 resource "aws_route53_record" "api" {
   zone_id = "${data.aws_route53_zone.root.zone_id}"
 
-  name = "${aws_api_gateway_domain_name.app.domain_name}"
+  name = "${aws_api_gateway_domain_name.api.domain_name}"
   type = "A"
 
   alias {
-    name                   = "${aws_api_gateway_domain_name.app.cloudfront_domain_name}"
-    zone_id                = "${aws_api_gateway_domain_name.app.cloudfront_zone_id}"
+    name                   = "${aws_api_gateway_domain_name.api.cloudfront_domain_name}"
+    zone_id                = "${aws_api_gateway_domain_name.api.cloudfront_zone_id}"
     evaluate_target_health = false
   }
 }
@@ -56,4 +56,8 @@ resource "aws_api_gateway_base_path_mapping" "api" {
 
 output "app_endpoint" {
   value = "https://${aws_api_gateway_domain_name.app.domain_name}"
+}
+
+output "graphql_playground" {
+  value = "https://${aws_api_gateway_domain_name.api.domain_name}/graphql"
 }

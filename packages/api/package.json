@@ -7,12 +7,16 @@
   "author": "Ryan Kennedy <ryaninvents@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "NODE_ENV=development babel-node src/server.js",
+    "dev": "NODE_ENV=development babel-node src/dev-server.js",
     "build": "NODE_ENV=production pack build",
     "start": "npm run -s dev"
   },
   "dependencies": {
+    "apollo-server-lambda": "^2.4.6",
     "express": "^4.16.4",
+    "graphql": "^14.1.1",
+    "graphql-playground-middleware-lambda": "^1.7.13",
+    "graphql-tools": "^4.0.4",
     "serverless-http": "^1.9.1"
   },
   "devDependencies": {
@@ -34,7 +38,9 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-react": "^7.12.4",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "express-graphql": "^0.7.1",
+    "graphql-playground-middleware-express": "^1.7.12"
   },
   "@pika/pack": {
     "pipeline": [
