@@ -1031,6 +1031,40 @@
     strip-bom "^3.0.0"
     validate-npm-package-license "^3.0.4"
 
+"@pika/pack@^0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@pika/pack/-/pack-0.3.3.tgz#fdaccaf94389133274398fac1c2339492a8b27ba"
+  integrity sha512-h+U/sVSCxa0bUKoeq7lyc2Fs/8xAJ932HgFhlU2fxGNHK4oMpfb14qNd/LFZgT1JmuuDwR30Ki7fLoKxh+oxSA==
+  dependencies:
+    "@pika/types" "^0.3.3"
+    camelcase "^4.0.0"
+    chalk "^2.1.0"
+    commander "^2.9.0"
+    detect-indent "~5.0.0"
+    execa "^1.0.0"
+    file-uri-to-path "^1.0.0"
+    github-url-from-git "^1.5.0"
+    glob "^7.1.1"
+    has-yarn "^1.0.0"
+    hosted-git-info "^2.7.1"
+    import-from "^2.1.0"
+    inquirer "^3.0.1"
+    invariant "^2.2.0"
+    is-builtin-module "^2.0.0"
+    is-ci "^1.0.10"
+    is-scoped "^1.0.0"
+    issue-regex "^2.0.0"
+    loud-rejection "^1.2.0"
+    mkdirp "^0.5.1"
+    opn "^5.4.0"
+    p-timeout "^2.0.1"
+    read "^1.0.7"
+    rimraf "^2.5.0"
+    semver "^5.6.0"
+    strip-ansi "^4.0.0"
+    strip-bom "^3.0.0"
+    validate-npm-package-license "^3.0.4"
+
 "@pika/plugin-build-node@^0.3.10":
   version "0.3.10"
   resolved "https://registry.yarnpkg.com/@pika/plugin-build-node/-/plugin-build-node-0.3.10.tgz#a2f066e0dcfe57e4fa78e06d1d1e7b62a9181c2f"
@@ -1061,6 +1095,21 @@
     rollup "^1.1.0"
     rollup-plugin-babel "^4.3.0"
 
+"@pika/plugin-build-node@^0.3.12":
+  version "0.3.12"
+  resolved "https://registry.yarnpkg.com/@pika/plugin-build-node/-/plugin-build-node-0.3.12.tgz#ad66b51147cd7726a0bcf512c642016a0ca6bc47"
+  integrity sha512-yQgI3Sqp+oLO5SbVe+sVXXjZ0ck+nSQpkLJzXOsj/3VrWma3gx2JKyNUuY6BQxI1L5Ui4uQnwD+n1o6GQnBSAw==
+  dependencies:
+    "@babel/core" "^7.0.0"
+    "@babel/plugin-syntax-dynamic-import" "^7.2.0"
+    "@babel/plugin-syntax-import-meta" "^7.2.0"
+    "@babel/preset-env" "^7.2.3"
+    "@pika/types" "^0.3.5"
+    babel-plugin-dynamic-import-node-babel-7 "^2.0.7"
+    builtin-modules "^3.0.0"
+    rollup "^1.1.0"
+    rollup-plugin-babel "^4.3.0"
+
 "@pika/plugin-standard-pkg@^0.3.10":
   version "0.3.10"
   resolved "https://registry.yarnpkg.com/@pika/plugin-standard-pkg/-/plugin-standard-pkg-0.3.10.tgz#5e39e973e3e2a7945869ca83f96a827ae6190186"
@@ -1079,7 +1128,16 @@
     "@types/node" "^10.12.18"
     standard-pkg "^0.4.0"
 
-"@pika/types@^0.3.3", "@pika/types@^0.3.5":
+"@pika/plugin-standard-pkg@^0.3.12":
+  version "0.3.12"
+  resolved "https://registry.yarnpkg.com/@pika/plugin-standard-pkg/-/plugin-standard-pkg-0.3.12.tgz#40dff6ce83a6bcbf0892956d15411746992d4b2d"
+  integrity sha512-QAV8onVIddqShfkJSMhwCFShe3AOZ2dPpDJlq0Hg62D/u6E4gSydrvOqXYH0ucfxGCLC+z3ur6kfpdlZgO530g==
+  dependencies:
+    "@pika/types" "^0.3.5"
+    "@types/node" "^10.12.18"
+    standard-pkg "^0.4.0"
+
+"@pika/types@^0.3.1", "@pika/types@^0.3.3", "@pika/types@^0.3.5":
   version "0.3.10"
   resolved "https://registry.yarnpkg.com/@pika/types/-/types-0.3.10.tgz#fa00a3d62ff14b86d72e8d200a9b0dd65f107fb1"
   integrity sha512-oQBags8sYCTUSK9YiIvZGnf5jsu8SGnEiHDSMBMyd3vuYpg2BBbQPrtU4NAC6y+A/NkKaZ0ARHvS0esBnetx+A==
@@ -1142,6 +1200,21 @@
   resolved "https://registry.yarnpkg.com/@ryaninvents/plugin-bundle-dependencies/-/plugin-bundle-dependencies-1.1.1.tgz#5b16dae07ce5941b47cef2228a72355eaff20ab8"
   integrity sha512-FWs34Jo6liUAZr3Y7SlDX8ncXovfBskyhiUfrBXvM7T5t9JdHrMtb9QLUgkAB1y0NJk1mEKMvioeZZBaQ1B/CQ==
   dependencies:
+    execa "^1.0.0"
+    fs-extra "^7.0.1"
+    gulp "^4.0.0"
+    gulp-rename "^1.4.0"
+    gulp-zip "^4.2.0"
+    has-yarn "^1.0.0"
+    temporarily "^1.0.5"
+
+"@ryaninvents/plugin-bundle-dependencies@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@ryaninvents/plugin-bundle-dependencies/-/plugin-bundle-dependencies-1.1.4.tgz#4166e5328ccd986c0bec6098bcd29e4e3414f1fb"
+  integrity sha512-UrJxxOX1w9qnRn6ry1K9VJeg8ThIbVveXtvNm6vbUEWSAO3gHxmYUY9ymfSA2raiaHHiIzkQcl3U4EWD2kJkNQ==
+  dependencies:
+    "@pika/types" "^0.3.1"
+    del "^3.0.0"
     execa "^1.0.0"
     fs-extra "^7.0.1"
     gulp "^4.0.0"
@@ -6315,6 +6388,19 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
+passport-strategy@1.x.x:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/passport-strategy/-/passport-strategy-1.0.0.tgz#b5539aa8fc225a3d1ad179476ddf236b440f52e4"
+  integrity sha1-tVOaqPwiWj0a0XlHbd8ja0QPUuQ=
+
+passport@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/passport/-/passport-0.4.0.tgz#c5095691347bd5ad3b5e180238c3914d16f05811"
+  integrity sha1-xQlWkTR71a07XhgCOMORTRbwWBE=
+  dependencies:
+    passport-strategy "1.x.x"
+    pause "0.0.1"
+
 path-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/path-browserify/-/path-browserify-0.0.0.tgz#a0b870729aae214005b7d5032ec2cbbb0fb4451a"
@@ -6401,6 +6487,11 @@ pause-stream@^0.0.11:
   integrity sha1-/lo0sMvOErWqaitAPuLnO2AvFEU=
   dependencies:
     through "~2.3"
+
+pause@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/pause/-/pause-0.0.1.tgz#1d408b3fdb76923b9543d96fb4c9dfd535d9cb5d"
+  integrity sha1-HUCLP9t2kjuVQ9lvtMnf1TXZy10=
 
 pbkdf2@^3.0.3:
   version "3.0.17"
