@@ -5,7 +5,9 @@ const fs = require('fs');
 const get = require('lodash/get');
 const AWS = require('aws-sdk/global');
 const S3 = require('aws-sdk/clients/s3');
+const { series, parallel } = require('gulp');
 const { name } = require('./package.json');
+const { runScript, scriptTask } = require('./config/gulp/yarn-workspace');
 
 const INI_FILENAME = `${__dirname}/.siterc`;
 
@@ -231,8 +233,23 @@ async function regenerate () {
   await uploadSecrets();
 }
 
+async function test () {
+  await runScript('test');
+}
+
+const build = ((build) => series(
+  build('log'),
+  parallel(
+    build('api'),
+    build('auth.backend'),
+    build('site')
+  )
+))((pkgName) => scriptTask('build', pkgName, { env: { NODE_ENV: 'production' } }));
+
 Object.assign(exports, {
   init,
+  test,
+  build,
   'init:ci': initCi,
   regenerate,
   'deployment-files.write': writeDeployFiles,

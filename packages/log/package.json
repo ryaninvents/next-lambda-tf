@@ -4,7 +4,13 @@
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
+    "test": "jest",
     "build": "NODE_ENV=production pack build"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ]
   },
   "@pika/pack": {
     "pipeline": [
@@ -110,7 +116,8 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-react": "^7.12.4",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.1.0"
   },
   "dependencies": {
     "winston": "^3.2.1"

@@ -108,7 +108,12 @@
     }
   },
   "dependencies": {
+    "@~/log": "file:../log/pkg",
+    "body-parser": "^1.18.3",
+    "dynamodb-store": "^1.0.8",
     "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "express-winston": "^3.1.0",
     "passport": "^0.4.0",
     "serverless-http": "^1.9.1"
   },
@@ -117,7 +122,6 @@
     "@pika/pack": "^0.3.3",
     "@pika/plugin-build-node": "^0.3.12",
     "@pika/plugin-standard-pkg": "^0.3.12",
-    "@ryaninvents/plugin-bundle-dependencies": "^1.1.4",
     "@ryaninvents/plugin-bundle-zip-node": "^1.3.1",
     "babel-eslint": "^10.0.1",
     "babel-preset-react-app": "^7.0.1",

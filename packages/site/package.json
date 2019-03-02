@@ -158,7 +158,6 @@
     "@pika/pack": "^0.3.1",
     "@pika/plugin-build-node": "^0.3.10",
     "@pika/plugin-standard-pkg": "^0.3.10",
-    "@ryaninvents/plugin-bundle-dependencies": "^1.1.1",
     "@ryaninvents/plugin-bundle-nextjs": "^1.0.0",
     "@ryaninvents/plugin-bundle-zip-node": "^1.2.0",
     "babel-eslint": "^10.0.1",
