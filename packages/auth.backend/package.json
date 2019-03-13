@@ -110,11 +110,15 @@
   "dependencies": {
     "@~/log": "file:../log/pkg",
     "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.4",
     "dynamodb-store": "^1.0.8",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "express-winston": "^3.1.0",
+    "eyed": "^1.0.2",
+    "lodash": "^4.17.11",
     "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
     "serverless-http": "^1.9.1"
   },
   "devDependencies": {
@@ -135,6 +139,9 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-react": "^7.12.4",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "mkdirp": "^0.5.1",
+    "pouchdb": "^7.0.0",
+    "pouchdb-find": "^7.0.0"
   }
 }
