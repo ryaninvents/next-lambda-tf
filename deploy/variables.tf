@@ -23,6 +23,8 @@ variable "ssl_cert_arn" {}
 variable "google_client_id" {}
 variable "google_client_secret" {}
 
+variable "sessions_secret_key" {}
+
 locals {
   default_tags = {
     app_name = "${var.app_name}"

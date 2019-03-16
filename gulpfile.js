@@ -213,7 +213,8 @@ provider "aws" {${profile ? `
     google_client_id: get(siterc, 'google.clientId'),
     google_client_secret: get(siterc, 'google.clientSecret'),
     shopify_client_id: get(siterc, 'shopify.clientId'),
-    shopify_client_secret: get(siterc, 'shopify.clientSecret')
+    shopify_client_secret: get(siterc, 'shopify.clientSecret'),
+    sessions_secret_key: get(siterc, 'sessions.key')
   }, null, 2);
 
   console.log(tfvars);

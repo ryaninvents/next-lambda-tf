@@ -14,7 +14,12 @@
   "@pika/pack": {
     "pipeline": [
       [
-        "@pika/plugin-standard-pkg"
+        "@pika/plugin-standard-pkg",
+        {
+          "exclude": [
+            "__tests__/**"
+          ]
+        }
       ],
       [
         "@pika/plugin-build-node"
@@ -108,6 +113,7 @@
     }
   },
   "dependencies": {
+    "@babel/runtime": "^7.3.4",
     "@~/log": "file:../log/pkg",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
@@ -142,6 +148,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "mkdirp": "^0.5.1",
     "pouchdb": "^7.0.0",
-    "pouchdb-find": "^7.0.0"
+    "pouchdb-find": "^7.0.0",
+    "session-pouchdb-store": "^0.2.3"
   }
 }

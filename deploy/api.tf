@@ -15,7 +15,7 @@ module "api_gateway" {
   app_description = "${var.app_description}"
   app_stage = "${var.app_stage}"
   api_gateway_stage = "api"
-  redeployment_hash = "${local.redeployment_hash}"
+  redeployment_hash = "${local.api_redeployment_hash}"
 }
 
 resource "aws_lambda_function" "api_lambda" {

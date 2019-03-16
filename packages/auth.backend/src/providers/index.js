@@ -26,8 +26,13 @@ PROVIDERS.forEach((register) => {
 });
 
 passport.serializeUser(function (user, done) {
-  console.log('serializeUser', ...arguments);
-  done(null, user.id);
+  try {
+    console.log('serializeUser', ...arguments);
+    done(null, user.id);
+  } catch (serializeError) {
+    logger.error(serializeError);
+    done(serializeError);
+  }
 });
 passport.deserializeUser(async function (id, done) {
   try {
@@ -37,6 +42,7 @@ passport.deserializeUser(async function (id, done) {
     }
     done(null, user);
   } catch (error) {
+    logger.error(error);
     done(error);
   }
 });
