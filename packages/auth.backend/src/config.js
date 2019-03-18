@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import logger from '@~/log';
 const dev = process.env.NODE_ENV !== 'production';
 
 const Config = {
@@ -27,8 +28,46 @@ const Config = {
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET
   },
+  cognito: {
+    userPoolId: process.env.USER_POOL_ID
+  },
   getEndpoint (service) {
     return get(Config, ['aws.endpoints', service], null);
+  },
+  get (...args) {
+    return get(Config, ...args);
+  },
+  getCookieDomain () {
+    // TODO: implement in a less-hacky manner
+    return Config.get('hosts.frontend')
+      // strip off port number
+      .split(':')[0]
+      // strip off first subdomain
+      .split('.').slice(1).join('.');
+  },
+  getCorsConfig () {
+    const whitelist = [...new Set([
+      Config.hosts.api,
+      Config.hosts.auth,
+      Config.hosts.frontend
+    ])];
+    return {
+      origin (origin, callback) {
+        if (!origin) {
+          callback(null, true);
+          return;
+        }
+        const originHost = origin.replace(/^https?:\/\//, '');
+        if (!whitelist.includes(originHost)) {
+          const errMsg = `Origin "${origin}" not permitted`;
+          logger.error(errMsg, { origin, whitelist });
+          callback(new Error(errMsg));
+          return;
+        }
+        callback(null, true);
+      },
+      credentials: true
+    };
   }
 };
 

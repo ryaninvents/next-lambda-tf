@@ -31,6 +31,6 @@ locals {
     app_stage = "${var.app_stage}"
   }
 
-  app_subdomain = "${var.app_subdomain == "" ? "${var.app_name}-${var.app_stage}" : var.app_subdomain}"
+  app_subdomain = "${var.app_subdomain == "" ? "${var.app_name}.${var.app_stage}" : var.app_subdomain}"
 }
 

@@ -2,11 +2,14 @@ import express from 'express';
 import session from 'express-session';
 import logger from '@~/log';
 import expressWinston from 'express-winston';
+import cors from 'cors';
 import DynamoStore from 'dynamodb-store';
 import authRoutes, { mountAuth } from './providers';
 import Config from './config';
 
 const server = express();
+
+server.use(cors(Config.getCorsConfig()));
 
 server.use(expressWinston.logger({
   winstonInstance: logger
@@ -44,7 +47,11 @@ server.use(session({
           endpoint: Config.getEndpoint('dynamo')
         } : null)
       }
-    })
+    }),
+    cookie: {
+      httpOnly: true,
+      domain: `.${Config.getCookieDomain()}`
+    }
   })
 }));
 mountAuth(server);

@@ -44,6 +44,7 @@ resource "aws_lambda_function" "auth_lambda" {
 
       FOREIGN_PROFILES_TABLE = "${aws_dynamodb_table.foreignProfiles.name}"
       USERS_TABLE = "${aws_dynamodb_table.users.name}"
+      USER_POOL_ID = "${aws_cognito_user_pool.user_pool.id}"
 
       GOOGLE_CLIENT_ID = "${var.google_client_id}"
       GOOGLE_CLIENT_SECRET = "${var.google_client_secret}"

@@ -16,6 +16,21 @@ resource "aws_iam_policy" "iam-auth-dynamo-rw" {
   policy      = "${data.aws_iam_policy_document.iam-doc-auth-dynamo-rw.json}"
 }
 
+data "aws_iam_policy_document" "iam-doc-cognito-admin" {
+  statement {
+    actions = ["cognito-idp:*"]
+    resources = [
+      "${aws_cognito_user_pool.user_pool.arn}"
+    ]
+  }
+}
+
+resource "aws_iam_policy" "iam-cognito-admin" {
+  name = "${var.app_name}-${var.app_stage}-cognito-admin"
+  description = "Permit admin management of Cognito users"
+  policy = "${data.aws_iam_policy_document.iam-doc-cognito-admin.json}"
+}
+
 resource "aws_iam_role" "role-auth-lambda-exec" {
   name = "${var.app_name}-${var.app_stage}-auth-lambda"
 
@@ -45,4 +60,9 @@ resource "aws_iam_role_policy_attachment" "auth-lambda-cloudwatch" {
 resource "aws_iam_role_policy_attachment" "auth-lambda-dynamo" {
   role       = "${aws_iam_role.role-auth-lambda-exec.name}"
   policy_arn = "${aws_iam_policy.iam-auth-dynamo-rw.arn}"
+}
+
+resource "aws_iam_role_policy_attachment" "auth-lambda-cognito" {
+  role       = "${aws_iam_role.role-auth-lambda-exec.name}"
+  policy_arn = "${aws_iam_policy.iam-cognito-admin.arn}"
 }

@@ -1,5 +1,8 @@
 import eyed from 'eyed';
 import Dynamo from 'aws-sdk/clients/dynamodb';
+import Cognito from 'aws-sdk/clients/cognitoidentityserviceprovider';
+import get from 'lodash/get';
+import logger from '@~/log';
 
 import Config from '../config';
 
@@ -11,6 +14,12 @@ const userDb = new Dynamo.DocumentClient({
 const foreignProfileDb = new Dynamo.DocumentClient({
   params: {
     TableName: Config.tables.foreignProfiles
+  }
+});
+
+const userPool = new Cognito({
+  params: {
+    UserPoolId: Config.cognito.userPoolId
   }
 });
 
@@ -52,6 +61,35 @@ export default class Consumer {
         foreignProfileKey: `${providerName}:${profile.id}`,
         userId: user.id
       }
+    }).promise();
+
+    const attributes = [];
+    const addAttribute = (key, value) => {
+      if (!value) return;
+      attributes.push({
+        Name: key,
+        Value: value
+      });
+    };
+
+    addAttribute('name', profile.displayName);
+    addAttribute('email', get(profile, 'emails.0.value'));
+    addAttribute('given_name', get(profile, 'name.givenName'));
+    addAttribute('family_name', get(profile, 'name.familyName'));
+    addAttribute('middle_name', get(profile, 'name.middle_name'));
+    addAttribute('picture', get(profile, 'photos.0.value'));
+    addAttribute('locale', get(profile, '_json.locale'));
+    logger.info({
+      event: 'Consumer.createFromForeignProfile',
+      providerName,
+      profile,
+      attributes,
+      user
+    });
+
+    await userPool.adminCreateUser({
+      Username: user.id,
+      UserAttributes: attributes
     }).promise();
     return user;
   }

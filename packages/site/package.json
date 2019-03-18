@@ -9,7 +9,9 @@
     "@babel/runtime": "^7.3.1",
     "babel-plugin-styled-components": "^1.10.0",
     "express": "^4.16.4",
+    "isomorphic-fetch": "^2.2.1",
     "next": "^7.0.3",
+    "promise-hook": "^0.1.4",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "rebass": "^3.0.1",
@@ -34,6 +36,9 @@
         {
           "nextBuildScript": [
             "build:nextjs"
+          ],
+          "sources": [
+            "components/**"
           ]
         }
       ],

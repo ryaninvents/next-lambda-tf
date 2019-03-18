@@ -4,8 +4,8 @@ data "aws_route53_zone" "root" {
 
 locals {
   frontend_domain = "${local.app_subdomain}.${var.root_domain}"
-  api_domain = "${local.app_subdomain}-api.${var.root_domain}"
-  auth_domain = "${local.app_subdomain}-auth.${var.root_domain}"
+  api_domain = "api-${local.app_subdomain}.${var.root_domain}"
+  auth_domain = "auth-${local.app_subdomain}.${var.root_domain}"
 }
 
 resource "aws_api_gateway_domain_name" "app" {
