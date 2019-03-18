@@ -89,7 +89,8 @@ export default class Consumer {
 
     await userPool.adminCreateUser({
       Username: user.id,
-      UserAttributes: attributes
+      UserAttributes: attributes,
+      MessageAction: 'SUPPRESS'
     }).promise();
     return user;
   }
